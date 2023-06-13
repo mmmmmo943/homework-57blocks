@@ -43,14 +43,14 @@ const gold_weekend=()=>{
 <template>
   <div class="container">
     <div class="table">
-      <div class="top">
+      <div class="top" style="border:  1px solid rgb(179, 177, 177);">
         <div style="width:10px;height:2px;background-color:cornflowerblue;margin-right: 10px;"></div>
         <div style="margin-right: 10px;">已选</div>
         <div style="width:10px;height:2px;background-color:gray;margin-right: 10px"></div>
         <div style="margin-right: 10px;">可选</div>
       </div>
-      <div class="label-box">星期/时间</div>
-      <div class="time-box">
+      <div class="label-box" style="border:  1px solid rgb(179, 177, 177);border-top: none;border-right:none">星期/时间</div>
+      <div class="time-box" style="border:  1px solid rgb(179, 177, 177);border-top: none;">
         <div class="time-box-item" v-for="(item, index) in time_range" :key="index">
           <div class="time-box-item-label">{{ item.title }}</div>
           <div class="time-box-item-cells">
@@ -122,7 +122,7 @@ const gold_weekend=()=>{
       .time-box-item {
         width: 50%;
         height: 100%;
-        border-right: 0.5px solid rgb(179, 177, 177);
+        // border-right: 0.5px solid rgb(179, 177, 177);
 
         .time-box-item-label {
           border-bottom: 0.5px solid rgb(179, 177, 177);
@@ -136,7 +136,7 @@ const gold_weekend=()=>{
           display: flex;
           width: 100%;
           height: 50%;
-
+          // border-left: 0.5px solid rgb(179, 177, 177);
           .cell {
             height: 100%;
             flex: 1;
@@ -153,13 +153,12 @@ const gold_weekend=()=>{
 
     .main {
       grid-area: main;
+      border-left: 0.5px solid  rgb(179, 177, 177);
     }
 
   }
 
-  .table>* {
-    border: 0.5px solid rgb(179, 177, 177);
-  }
+
 
   .select-box {
     width: 100%;
@@ -173,6 +172,8 @@ const gold_weekend=()=>{
       width: 100%;
       height: 30px;
       border-bottom: 1px solid rgb(179, 177, 177);
+      border-left: 1px solid rgb(179, 177, 177);
+      border-right: 1px solid rgb(179, 177, 177);
 
     }
 

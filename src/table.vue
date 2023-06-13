@@ -5,7 +5,8 @@
             <div class="inner-box">
                 <div style="width: 100% ;height:100%;" v-for="(ele, index_cell) in item.hour_sections" :key="index_cell"
                     v-if="item.hour_sections" :ref="el => (divRefs[index][index_cell] = el)">
-                    <el-popover placement="top-start" :width="180" trigger="hover" :content="item.day + ','+item.hour_sections[index_cell].time ">
+                    <el-popover placement="top-start"  trigger="hover">
+                        <div style="background-color: white;">{{item.day + ','+item.hour_sections[index_cell].time }}</div>
                         <template #reference>
                             <div class="inner-cell" 
                                 :class="{ 'selected': ele.selected, 'unselected': ele.selected == false }">
@@ -21,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, defineEmits,onBeforeMount } from 'vue';
+import { ref, reactive, onMounted, defineEmits } from 'vue';
 import dayjs from 'dayjs'
 
 
@@ -69,7 +70,6 @@ const num_time_convert2 = (num) => {
     let baseTime = dayjs().startOf('day')
     let startTime = baseTime.add(num * 30, 'minute')
     let endTime = startTime.add(30, 'minute')
-   
     return (`${startTime.format('HH:mm')}-${endTime.format('HH:mm')}`)
 }
 //给列表单位添加时间段属性
