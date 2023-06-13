@@ -6,7 +6,7 @@
                 <div style="width: 100% ;height:100%;" v-for="(ele, index_cell) in item.hour_sections" :key="index_cell"
                     v-if="item.hour_sections" :ref="el => (divRefs[index][index_cell] = el)">
                     <el-popover placement="top-start"  trigger="hover">
-                        <div style="background-color: white;">{{item.day + ','+item.hour_sections[index_cell].time }}</div>
+                        <div style="background-color: rgb(190, 190, 190);border-radius: 3px;display: flex;justify-content: center;align-items: center;">{{item.day + ','+item.hour_sections[index_cell].time }}</div>
                         <template #reference>
                             <div class="inner-cell" 
                                 :class="{ 'selected': ele.selected, 'unselected': ele.selected == false }">
