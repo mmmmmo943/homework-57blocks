@@ -181,6 +181,8 @@ const gold_weekend=()=>{
       height: auto;
       display: flex;
       flex-direction: column;
+      border-right: 0.5px solid rgb(179, 177, 177);
+      border-left: 0.5px solid rgb(179, 177, 177);
 
       .select-cells {
         width: 100%;
@@ -198,6 +200,7 @@ const gold_weekend=()=>{
         }
 
         .select-times {
+          margin-left: 10px;
           flex: 7;
           display: flex;
           // justify-content: center;

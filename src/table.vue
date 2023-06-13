@@ -5,9 +5,9 @@
             <div class="inner-box">
                 <div style="width: 100% ;height:100%;" v-for="(ele, index_cell) in item.hour_sections" :key="index_cell"
                     v-if="item.hour_sections" :ref="el => (divRefs[index][index_cell] = el)">
-                    <el-popover placement="top-start" :width="180" trigger="hover" :content="item.day + ',' + hover_label">
+                    <el-popover placement="top-start" :width="180" trigger="hover" :content="item.day + ','+item.hour_sections[index_cell].time ">
                         <template #reference>
-                            <div class="inner-cell" @mouseenter="hover(ele, item)"
+                            <div class="inner-cell" 
                                 :class="{ 'selected': ele.selected, 'unselected': ele.selected == false }">
                             </div>
                         </template>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, defineEmits } from 'vue';
+import { ref, reactive, onMounted, defineEmits,onBeforeMount } from 'vue';
 import dayjs from 'dayjs'
 
 
@@ -63,6 +63,15 @@ const table_data = reactive([
         key: 7,
     }
 ])
+
+const num_time_convert2 = (num) => {
+    //   使用dayjs转化
+    let baseTime = dayjs().startOf('day')
+    let startTime = baseTime.add(num * 30, 'minute')
+    let endTime = startTime.add(30, 'minute')
+   
+    return (`${startTime.format('HH:mm')}-${endTime.format('HH:mm')}`)
+}
 //给列表单位添加时间段属性
 table_data.forEach((item) => {
     item.hour_sections = []
@@ -70,26 +79,29 @@ table_data.forEach((item) => {
         item.hour_sections.push({
             num: i,//时间段的对应key值
             included: false,//网格是否已包含
-            selected: false//网格是否已选择
+            selected: false,//网格是否已选择
+            time:num_time_convert2(i)
         })
     }
 })
+console.log('table_data',table_data)
 const divRefs = ref(table_data.map(() => Array(48).fill(null)))//网格方块的单个引用
 // 悬停方法
 const hover_label = ref('')
 
-//网格悬停显示方法
-const hover = (ele, item) => {
-    num_time_convert(ele.num)
-}
-//将时间num转化为时间段
-const num_time_convert = (num) => {
-    //   使用dayjs转化
-    let baseTime = dayjs().startOf('day')
-    let startTime = baseTime.add(num * 30, 'minute')
-    let endTime = startTime.add(30, 'minute')
-    hover_label.value = `${startTime.format('HH:mm')}-${endTime.format('HH:mm')}`
-}
+// //网格悬停显示方法
+// const hover = (ele, item) => {
+//     num_time_convert(ele.num)
+// }
+// //将时间num转化为时间段
+// const num_time_convert = (num) => {
+//     //   使用dayjs转化
+//     let baseTime = dayjs().startOf('day')
+//     let startTime = baseTime.add(num * 30, 'minute')
+//     let endTime = startTime.add(30, 'minute')
+//     hover_label.value = `${startTime.format('HH:mm')}-${endTime.format('HH:mm')}`
+// }
+
 //拖拽框创建与定位
 const table_container = ref(null)//网格table的引用
 const startPoint = ref()//拖框的起始点
@@ -306,6 +318,7 @@ const selected_area = () => {
 
     })
 }
+
 onMounted(() => {
     frame_location = table_container.value.getBoundingClientRect()
     const { left, top } = frame_location
@@ -323,7 +336,8 @@ onMounted(() => {
                     { x: Math.round(rect.left - left - 88), y: Math.round(rect.bottom - top) },
                     { x: Math.round(rect.right - left - 88), y: Math.round(rect.bottom - top) },
                 ],
-                element: div
+                element: div,
+                
             };
         })
     );
